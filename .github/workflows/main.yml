@@ -1,0 +1,36 @@
+name: Asesor de Inversiones Semanal
+
+on:
+  schedule:
+    # Cron sintaxis: minuto hora dia_mes mes dia_semana
+    # Corre a las 13:00 UTC (Aprox 10:00 AM Chile)
+    # Los días: 1=Lunes, 4=Jueves
+    - cron: '0 13 * * 1,4'
+  
+  # Permite ejecutarlo manualmente desde la web de GitHub si quieres probar
+  workflow_dispatch:
+
+jobs:
+  run-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Descargar código del repositorio
+      uses: actions/checkout@v3
+
+    - name: Instalar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Instalar librerías
+      run: |
+        pip install -r requirements.txt
+
+    - name: Ejecutar Asesor
+      env:
+        # Aquí inyectamos los secretos al script
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      run: python asesor.py

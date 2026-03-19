@@ -1,0 +1,6 @@
+google-generativeai
+yfinance
+ta
+requests
+pandas
+numpy
