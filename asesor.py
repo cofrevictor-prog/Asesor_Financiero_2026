@@ -101,7 +101,7 @@ def main():
             msg = f"📌 *{ticker}*\nPrecio: ${datos['precio']} | RSI: {datos['rsi']}\n\n{analisis}"
             enviar_telegram(msg)
             exito = True
-            time.sleep(4)
+            time.sleep(8)
     
     if not exito:
         enviar_telegram("⚠️ No se pudieron obtener datos.")
